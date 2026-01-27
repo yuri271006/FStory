@@ -1,0 +1,79 @@
+/* Tối ưu hóa cho trải nghiệm đọc Zen Mode */
+.reading-container {
+    max-width: 750px; /* Độ rộng "vàng" giúp mắt không phải quét quá xa */
+    margin: 40px auto;
+    padding: 0 20px 100px;
+}
+
+.chapter-header {
+    text-align: center;
+    margin-bottom: 60px;
+    border-bottom: 1px dashed var(--border);
+    padding-bottom: 30px;
+}
+
+.chapter-header h1 {
+    font-family: 'Merriweather', serif; /* Font tiêu đề sang trọng */
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1.3;
+    color: var(--text-main);
+    margin: 15px 0;
+}
+
+/* Kiểu chữ nội dung - Đây là linh hồn của web truyện */
+.chapter-content {
+    font-family: 'Lora', serif; /* Font có chân giúp nhận diện mặt chữ nhanh hơn */
+    font-size: 20px;
+    line-height: 1.85; /* Khoảng cách dòng thoáng đạt giúp mắt dễ nắm bắt */
+    color: var(--text-main);
+    text-align: justify; /* Căn đều hai bên giúp bố cục gọn gàng */
+    word-wrap: break-word;
+}
+
+.chapter-content p {
+    margin-bottom: 28px; /* Khoảng cách giữa các đoạn vừa đủ để nghỉ mắt */
+}
+
+/* Điều hướng chương ở cuối trang */
+.reading-footer-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 60px;
+    padding-top: 30px;
+    border-top: 1px solid var(--border);
+}
+
+.nav-btn {
+    padding: 12px 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    color: var(--text-main);
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.nav-btn:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+/* Responsive cho Mobile */
+@media (max-width: 767px) {
+    .reading-container {
+        margin: 20px auto;
+        padding-bottom: 80px;
+    }
+    
+    .chapter-header h1 {
+        font-size: 1.6rem !important; /* Sửa lỗi tiêu đề quá to trên mobile */
+    }
+
+    .chapter-content {
+        font-size: 18px !important;
+        line-height: 1.75;
+    }
+}

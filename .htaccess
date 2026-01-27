@@ -1,0 +1,35 @@
+# ----------------------------------------------------------------------
+# FStory - Cấu hình URL sạch và Bảo mật (Cập nhật cho HOME)
+# ----------------------------------------------------------------------
+
+# Ngăn chặn việc liệt kê thư mục
+Options -Indexes
+
+# Đặt home.php làm file mặc định thay vì index.php
+DirectoryIndex home.php
+
+RewriteEngine On
+RewriteBase /fstory/
+
+# --- 1. BẢO MẬT ---
+RewriteCond %{REQUEST_URI} ^/\. [NC]
+RewriteRule ^ - [F,L]
+RewriteRule ^view/ - [F,L]
+
+# --- 2. XÓA ĐUÔI FILE VÀ ĐỊNH DẠNG LẠI ---
+RewriteCond %{THE_REQUEST} \s/+(.*?)\.php[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L,NE]
+
+RewriteCond %{THE_REQUEST} \s/+(.*?)\.html[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L,NE]
+
+# --- 3. ÁNH XẠ URL SẠCH VỀ FILE THỰC TẾ ---
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*)$ $1.php [L]
+
+# --- 4. ĐIỀU HƯỚNG VỀ HOME (CATCH-ALL) ---
+# Nếu URL không tồn tại, đá về trang home
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ home [L]
