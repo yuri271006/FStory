@@ -3,7 +3,7 @@ session_start();
 
 // Nếu đã đăng nhập, lấy handle từ session để điều hướng về trang cá nhân
 if (isset($_SESSION['user_id']) && isset($_SESSION['user_handle'])) {
-    header("Location: ../../me/@" . $_SESSION['user_handle']);
+    header("Location: ../../@" . $_SESSION['user_handle']);
     exit();
 }
 ?>
@@ -347,7 +347,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_handle'])) {
                 if (result.success) {
                     msgBox.className = 'msg-box msg-success';
                     msgBox.innerHTML = result.message;
-                    setTimeout(() => window.location.href = '../../me/@' + result.handle, 1500);
+                    setTimeout(() => window.location.href = '../../@' + result.handle, 1500);
                 } else {
                     msgBox.className = 'msg-box msg-error';
                     msgBox.innerHTML = result.message;

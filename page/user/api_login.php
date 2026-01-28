@@ -28,7 +28,7 @@ try {
         // 3. Đăng nhập thành công, thiết lập Session
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_handle'] = $user['user_handle']; // Lưu handle vào session
-
+        $_SESSION['user_avatar'] = $user['avatar']; // THÊM DÒNG NÀY ĐỂ LƯU AVATAR
         echo json_encode([
             'success' => true,
             'message' => 'Đăng nhập thành công!',

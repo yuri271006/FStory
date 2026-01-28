@@ -28,10 +28,11 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^(.*)$ $1.php [L]
 
+# Quy tắc cho trang cá nhân: me/@handle
+RewriteRule ^@([a-zA-Z0-9._-]+)$ page/me/index?handle=$1 [L,QSA]
+
 # --- 4. ĐIỀU HƯỚNG VỀ HOME (CATCH-ALL) ---
 # Nếu URL không tồn tại, đá về trang home
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ home [L]
-# Quy tắc cho trang cá nhân: me/@handle
-RewriteRule ^me/@([a-zA-Z0-9._-]+)$ page/me/index.php?handle=$1 [L,QSA]
