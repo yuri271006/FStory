@@ -1,45 +1,42 @@
 <?php
-session_start();
+// Kết nối Database và khởi tạo Session
+require_once "../../assets/db.php";
+
 header('Content-Type: application/json');
 
-// Kiểm tra phương thức request
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    echo json_encode(['success' => false, 'message' => 'Phương thức không hợp lệ!']);
+    echo json_encode(['success' => false, 'message' => 'Yêu cầu không hợp lệ!']);
     exit();
 }
 
-// Nhận dữ liệu từ form
-$username = $_POST['username'] ?? '';
+$username = trim($_POST['username'] ?? '');
 $password = $_POST['password'] ?? '';
 
-// Kiểm tra dữ liệu đầu vào
+// 1. Xác minh dữ liệu đầu vào
 if (empty($username) || empty($password)) {
-    echo json_encode(['success' => false, 'message' => 'Vui lòng điền đầy đủ thông tin!']);
+    echo json_encode(['success' => false, 'message' => 'Vui lòng nhập đầy đủ tài khoản và mật khẩu!']);
     exit();
 }
 
-/** * LOGIC KIỂM TRA DATABASE (Giả lập)
- * Sau này bạn sẽ thay phần này bằng truy vấn SQL thực tế
- */
-$mock_user = [
-    'id' => 1,
-    'username' => 'admin',
-    'password' => '123456', // Trong thực tế phải dùng password_verify()
-    'nickname' => 'Lục Châu'
-];
+try {
+    // 2. Kiểm tra người dùng trong Database (Hỗ trợ cả email và nickname)
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ? LIMIT 1");
+    $stmt->execute([$username]);
 
-if ($username === $mock_user['username'] && $password === $mock_user['password']) {
-    // Lưu thông tin vào Session
-    $_SESSION['user_id'] = $mock_user['id'];
-    $_SESSION['user_name'] = $mock_user['nickname'];
-    
-    echo json_encode([
-        'success' => true, 
-        'message' => 'Đăng nhập thành công! Đang chuyển hướng...'
-    ]);
-} else {
-    echo json_encode([
-        'success' => false, 
-        'message' => 'Tài khoản hoặc mật khẩu không chính xác!'
-    ]);
+    $user = $stmt->fetch();
+    if ($user && password_verify($password, $user['password'])) {
+        // 3. Đăng nhập thành công, thiết lập Session
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['user_handle'] = $user['user_handle']; // Lưu handle vào session
+
+        echo json_encode([
+            'success' => true,
+            'message' => 'Đăng nhập thành công!',
+            'handle' => $user['user_handle'] // Trả về handle cho AJAX
+        ]);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Tài khoản hoặc mật khẩu không chính xác!']);
+    }
+} catch (PDOException $e) {
+    echo json_encode(['success' => false, 'message' => 'Lỗi hệ thống, vui lòng thử lại sau!']);
 }

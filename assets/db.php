@@ -3,7 +3,9 @@
  * FStory Database Connection
  * Sử dụng PDO để tối ưu bảo mật và hiệu suất
  */
-
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 // 1. Cấu hình thông số kết nối
 $host = 'localhost';
 $dbname = 'fstory_db'; // Tên database của bạn
