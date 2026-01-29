@@ -274,10 +274,12 @@ main {
 
 .card-cover {
     position: relative;
-    padding-top: 140%;
     background: var(--border);
+    padding: 5px;
 }
-
+.card-cover img{
+    height: 190px;
+}
 .card-info {
     padding: 12px;
 }

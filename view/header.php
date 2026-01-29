@@ -21,7 +21,7 @@
 
             <?php if (isset($_SESSION['user_id'])): ?>
                 <a href="creator" class="btn-write">
-                    <i class="fa-solid fa-pen-nib"></i> FStudio
+                    FStudio
                 </a>
 
                 <a href="/fstory/@<?php echo $_SESSION['user_handle']; ?>"

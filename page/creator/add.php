@@ -5,8 +5,13 @@ if (!isset($_SESSION['user_id'])) { header("Location: /fstory/page/user/account"
 <!DOCTYPE html>
 <html lang="vi" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <title>Sáng tác tác phẩm mới | FStory Studio</title>
+    <!--Meta-->
+    <?php
+        // Đặt tiêu đề riêng cho trang này
+        $page_title = "FStudio | Create";
+        // Sau đó mới include
+        include "../../view/meta_tag.php";
+    ?>
     <link rel="stylesheet" href="/fstory/assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -38,18 +43,29 @@ if (!isset($_SESSION['user_id'])) { header("Location: /fstory/page/user/account"
     </style>
 </head>
 <body>
-    <?php include "../../view/header.php"; ?>
+    <header>
+        <div class="container header-content">
+            <div style="display: flex; align-items: center; gap: 40px;">
+                <a href="/fstory/creator" class="logo">FStudio</a>
+            </div>
 
+
+            <div class="nav-actions">
+                <button class="icon-btn" id="themeToggle"><i class="fa-solid fa-moon"></i></button>
+                <a href="/fstory/creator" class="btn-write" style="background: var(--primary); color: white;">Trở về</a>
+            </div>
+        </div>
+    </header>
     <main class="container">
         <div class="creator-card shadow">
             <div class="creator-header">
-                <h2 class="section-title">Thông tin tác phẩm</h2>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">Hãy điền đầy đủ thông tin để độc giả dễ dàng tìm thấy truyện của bạn.</p>
+                <h2 class="section-title">ĐĂNG KÝ THÔNG TIN</h2>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Hãy điền đủ các thông tin cơ bản dưới đây để khởi tạo một tác phẩm trên nền tảng.</p>
             </div>
 
             <form id="storyForm" class="creator-body" enctype="multipart/form-data">
                 <div class="upload-wrapper">
-                    <label class="form-label" style="display:block; margin-bottom:10px; font-weight:800; font-size:0.85rem; color:var(--text-muted);">ẢNH BÌA TRUYỆN</label>
+                    <label class="form-label" style="display:block; margin-bottom:10px; font-weight:800; font-size:0.85rem; color:var(--text-muted);">BÌA TÁC PHẨM</label>
                     <label class="upload-label" for="cover_file">
                         <img id="cover-preview" src="#" alt="Preview">
                         <div id="placeholder-content" class="upload-placeholder">
@@ -64,16 +80,16 @@ if (!isset($_SESSION['user_id'])) { header("Location: /fstory/page/user/account"
                 <div class="fields-wrapper">
                     <div class="form-group">
                         <label>Tên tác phẩm</label>
-                        <input type="text" name="title" class="form-control" required placeholder="Ví dụ: Kiếm Lai">
+                        <input type="text" name="title" class="form-control" required placeholder="Đặt tên cho tác phẩm của bạn...">
                     </div>
                     
                     <div class="form-group">
-                        <label>Mô tả / Tóm tắt nội dung</label>
-                        <textarea name="description" class="form-control" rows="10" placeholder="Viết vài dòng giới thiệu về câu chuyện của bạn..."></textarea>
+                        <label>Văn án</label>
+                        <textarea name="description" class="form-control" rows="10" placeholder="Viết tóm tắt, miêu tả, cốt truyện của tác phẩm,..."></textarea>
                     </div>
 
-                    <button type="submit" class="btn-submit" style="width:100%; padding:16px; background:var(--primary); color:white; border-radius:var(--radius-md); font-weight:800; margin-top:10px;">
-                        <i class="fa-solid fa-feather-pointed"></i> BẮT ĐẦU XUẤT BẢN
+                    <button type="submit" class="btn-submit" style="width:100%; padding:16px; background:var(--primary); color:white; border-radius:var(--radius-md); font-weight:800; margin-top:0px;">
+                        KHỞI TẠO
                     </button>
                     <div id="statusMsg" style="margin-top:15px; display:none; padding:12px; border-radius:8px; font-weight:600; text-align:center;"></div>
                 </div>
@@ -114,14 +130,15 @@ if (!isset($_SESSION['user_id'])) { header("Location: /fstory/page/user/account"
                 msg.style.color = data.success ? '#15803d' : '#b91c1c';
                 msg.innerHTML = data.message;
 
-                if(data.success) setTimeout(() => window.location.href = '/fstory/creator', 1500);
+                if(data.success) setTimeout(() => window.location.href = '/fstory/creator', 1000);
             } catch (err) {
                 msg.innerHTML = "Lỗi kết nối!";
             } finally {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fa-solid fa-feather-pointed"></i> BẮT ĐẦU XUẤT BẢN';
+                btn.disabled = true;
+                btn.innerHTML = 'Loading...';
             }
         };
     </script>
+    <script src="/fstory/assets/js/system_display.js"></script>
 </body>
 </html>

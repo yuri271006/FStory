@@ -1,7 +1,13 @@
 <?php
 require_once "../../assets/db.php";
+
+// Tắt hiển thị lỗi ra màn hình để tránh làm hỏng JSON
+error_reporting(0); 
+ini_set('display_errors', 0);
+
 header('Content-Type: application/json');
 
+// 1. Kiểm tra đăng nhập
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(['success' => false, 'message' => 'Vui lòng đăng nhập!']);
     exit();
@@ -9,58 +15,67 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 $title = trim($_POST['title'] ?? '');
-$desc = trim($_POST['description'] ?? '');
-$cover_name = 'default-cover.jpg'; // Ảnh mặc định nếu không upload
+$description = trim($_POST['description'] ?? '');
 
-// 1. Xử lý Upload ảnh vào thư mục root/src
+if (empty($title)) {
+    echo json_encode(['success' => false, 'message' => 'Tên truyện không được để trống!']);
+    exit();
+}
+
+// 2. Hàm tạo Slug chuẩn tiếng Việt (Thay thế iconv bị lỗi)
+function createSlug($str) {
+    if (!$str) return '';
+    $str = mb_strtolower($str, 'UTF-8');
+    // Thay thế thủ công các ký tự tiếng Việt
+    $str = preg_replace("/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/", 'a', $str);
+    $str = preg_replace("/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/", 'e', $str);
+    $str = preg_replace("/(ì|í|ị|ỉ|ĩ)/", 'i', $str);
+    $str = preg_replace("/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/", 'o', $str);
+    $str = preg_replace("/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/", 'u', $str);
+    $str = preg_replace("/(ỳ|ý|ỵ|ỷ|ỹ)/", 'y', $str);
+    $str = preg_replace("/(đ)/", 'd', $str);
+    // Xóa ký tự đặc biệt
+    $str = preg_replace('/[^a-z0-9-\s]/', '', $str);
+    $str = preg_replace('/([\s]+)/', '-', $str);
+    return trim($str, '-');
+}
+
+// Tạo slug và thêm random số để tránh trùng
+$slug = createSlug($title) . '-' . time(); 
+
+// 3. Xử lý Upload Ảnh bìa
+$cover_image = 'fstory_logo.png'; // Ảnh mặc định
+
 if (isset($_FILES['cover_file']) && $_FILES['cover_file']['error'] === 0) {
-    $upload_dir = "../../src/"; // Từ page/creator/ nhảy ra root/src
-    
-    // Kiểm tra định dạng (Chỉ cho phép ảnh)
     $allowed = ['jpg', 'jpeg', 'png', 'webp'];
     $filename = $_FILES['cover_file']['name'];
     $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 
-    if (!in_array($ext, $allowed)) {
-        echo json_encode(['success' => false, 'message' => 'Định dạng ảnh không hỗ trợ!']);
-        exit();
-    }
+    if (in_array($ext, $allowed)) {
+        // Tên ảnh: cover_userid_timestamp.ext
+        $new_name = "cover_" . $user_id . "_" . time() . "." . $ext;
+        $upload_path = "../../src/" . $new_name;
 
-    // Kiểm tra dung lượng (Max 2MB)
-    if ($_FILES['cover_file']['size'] > 2 * 1024 * 1024) {
-        echo json_encode(['success' => false, 'message' => 'Ảnh quá lớn (Tối đa 2MB)!']);
-        exit();
-    }
-
-    // Tạo tên file bảo mật theo yêu cầu: u{id}_{time}_{random}.ext
-    $cover_name = "u" . $user_id . "_" . time() . "_" . bin2hex(random_bytes(4)) . "." . $ext;
-    
-    if (!move_uploaded_file($_FILES['cover_file']['tmp_name'], $upload_dir . $cover_name)) {
-        echo json_encode(['success' => false, 'message' => 'Lỗi khi lưu ảnh vào src/!']);
-        exit();
+        if (move_uploaded_file($_FILES['cover_file']['tmp_name'], $upload_path)) {
+            $cover_image = $new_name;
+        }
     }
 }
 
-// 2. Tạo Slug URL sạch (Ví dụ: "Kiếm Lai" -> "kiem-lai-123")
-function generateSlug($text) {
-    $text = preg_replace('~[^\pL\d]+~u', '-', $text);
-    $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
-    $text = preg_replace('~[^-\w]+~', '', $text);
-    return strtolower(trim($text, '-')) . '-' . rand(100, 999);
-}
-
-$slug = generateSlug($title);
-
+// 4. Lưu vào Database
 try {
-    // 3. Lưu vào Database (Đảm bảo cột cover_image đã tồn tại)
-    $sql = "INSERT INTO stories (user_id, title, slug, description, cover_image) VALUES (?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO stories (user_id, title, slug, description, cover_image, status, created_at) 
+            VALUES (?, ?, ?, ?, ?, 'ongoing', NOW())";
     $stmt = $pdo->prepare($sql);
-    
-    if ($stmt->execute([$user_id, $title, $slug, $desc, $cover_name])) {
-        echo json_encode(['success' => true, 'message' => 'Truyện đã được tạo thành công!']);
-    } else {
-        echo json_encode(['success' => false, 'message' => 'Không thể lưu truyện vào database!']);
-    }
+    $stmt->execute([$user_id, $title, $slug, $description, $cover_image]);
+
+    echo json_encode([
+        'success' => true,
+        'message' => 'Tạo thành công, đang chuyển hướng...',
+        'redirect' => '/fstory/creator' // Đường dẫn để JS chuyển hướng
+    ]);
+
 } catch (PDOException $e) {
     echo json_encode(['success' => false, 'message' => 'Lỗi Database: ' . $e->getMessage()]);
 }
+?>
