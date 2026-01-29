@@ -4,7 +4,10 @@
             <a href="./" class="logo">FStory</a>
             <nav class="main-nav">
                 <a href="./" class="nav-link">Trang chủ</a>
-
+                <a href="" class="nav-link">Thể loại</a>
+                <a href="" class="nav-link">Kiếm tiền</a>
+                <a href="" class="nav-link">Tin tức</a>
+                <a href="" class="nav-link">Ủng hộ</a>
             </nav>
         </div>
 
@@ -18,7 +21,7 @@
 
             <?php if (isset($_SESSION['user_id'])): ?>
                 <a href="creator" class="btn-write">
-                    <i class="fa-solid fa-pen-nib"></i> Sáng tác
+                    <i class="fa-solid fa-pen-nib"></i> FStudio
                 </a>
 
                 <a href="/fstory/@<?php echo $_SESSION['user_handle']; ?>"

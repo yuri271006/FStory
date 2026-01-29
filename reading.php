@@ -1,3 +1,6 @@
+<?php 
+    require_once "assets/db.php"; 
+?>
 <!DOCTYPE html>
 <html lang="vi" data-theme="light">
 <head>

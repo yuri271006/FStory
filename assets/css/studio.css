@@ -1,44 +1,234 @@
 /* --- LAYOUT STUDIO --- */
-.studio-grid { display: grid; grid-template-columns: 300px 1fr; gap: 30px; margin-top: 30px; }
-.studio-sidebar { position: sticky; top: 100px; height: fit-content; }
+.studio-grid {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 30px;
+  margin-top: 30px;
+}
+.studio-sidebar {
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+}
 
 /* --- TABS CHUYỂN ĐỔI --- */
-.studio-tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
-.tab-btn { padding: 10px 20px; border-radius: 8px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: 0.2s; }
-.tab-btn.active { background: var(--bg-card); color: var(--primary); box-shadow: var(--shadow); }
-.tab-btn:hover { color: var(--primary); }
+.studio-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
+}
+.tab-btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 700;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: 0.2s;
+}
+.tab-btn.active {
+  background: var(--bg-card);
+  color: var(--primary);
+  box-shadow: var(--shadow);
+}
+.tab-btn:hover {
+  color: var(--primary);
+}
 
 /* --- DANH SÁCH CHƯƠNG (DRAG & DROP) --- */
-.chapter-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px; transition: 0.2s; cursor: grab; }
-.chapter-item:hover { border-color: var(--primary); transform: translateX(5px); }
-.chapter-item:active { cursor: grabbing; }
-.sortable-ghost { opacity: 0.4; background: var(--primary-soft); border: 2px dashed var(--primary); }
-.sortable-drag { cursor: grabbing; opacity: 1; background: var(--bg-card); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+.chapter-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 10px;
+  transition: 0.2s;
+  cursor: grab;
+}
+.chapter-item:hover {
+  border-color: var(--primary);
+  transform: translateX(5px);
+}
+.chapter-item:active {
+  cursor: grabbing;
+}
+.sortable-ghost {
+  opacity: 0.4;
+  background: var(--primary-soft);
+  border: 2px dashed var(--primary);
+}
+.sortable-drag {
+  cursor: grabbing;
+  opacity: 1;
+  background: var(--bg-card);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
 
 /* --- UPLOAD INPUT --- */
-.file-upload-wrapper { position: relative; overflow: hidden; display: inline-block; width: 100%; margin-top: 10px; }
-.file-upload-wrapper input[type=file] { position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
-.btn-upload { display: block; padding: 10px; text-align: center; border: 2px dashed var(--border); border-radius: 8px; color: var(--text-muted); font-weight: 700; transition: 0.2s; }
-.btn-upload:hover { border-color: var(--primary); color: var(--primary); background: rgba(99,102,241,0.05); }
+.file-upload-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  width: 100%;
+  margin-top: 10px;
+}
+.file-upload-wrapper input[type="file"] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+.btn-upload {
+  display: block;
+  padding: 10px;
+  text-align: center;
+  border: 2px dashed var(--border);
+  border-radius: 8px;
+  color: var(--text-muted);
+  font-weight: 700;
+  transition: 0.2s;
+}
+.btn-upload:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: rgba(99, 102, 241, 0.05);
+}
 
 /* --- MODAL (HỘP THOẠI) --- */
-.f-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 9990; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.3s; }
-.f-modal-overlay.open { opacity: 1; visibility: visible; }
-.f-modal { background: var(--bg-card); width: 90%; max-width: 400px; padding: 30px; border-radius: var(--radius-lg); box-shadow: 0 20px 50px rgba(0,0,0,0.3); transform: translateY(20px); transition: 0.3s; text-align: center; border: 1px solid var(--border); }
-.f-modal-overlay.open .f-modal { transform: translateY(0); }
-.f-modal h3 { font-size: 1.3rem; margin-bottom: 10px; color: var(--text-main); font-weight: 800; }
-.f-modal p { color: var(--text-muted); margin-bottom: 25px; line-height: 1.5; font-size: 0.95rem; }
-.f-modal-actions { display: flex; gap: 10px; justify-content: center; }
-.btn-modal { padding: 10px 24px; border-radius: 8px; font-weight: 700; cursor: pointer; border: none; font-size: 0.9rem; transition: 0.2s; }
-.btn-cancel { background: var(--bg-body); color: var(--text-muted); border: 1px solid var(--border); }
-.btn-cancel:hover { background: var(--border); }
-.btn-confirm { background: var(--primary); color: white; }
-.btn-confirm:hover { filter: brightness(1.1); }
-.btn-confirm.danger { background: #ef4444; }
+.f-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 9990;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+}
+.f-modal-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+.f-modal {
+  background: var(--bg-card);
+  width: 90%;
+  max-width: 400px;
+  padding: 30px;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  transform: translateY(20px);
+  transition: 0.3s;
+  text-align: center;
+  border: 1px solid var(--border);
+}
+.f-modal-overlay.open .f-modal {
+  transform: translateY(0);
+}
+.f-modal h3 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: var(--text-main);
+  font-weight: 800;
+}
+.f-modal p {
+  color: var(--text-muted);
+  margin-bottom: 25px;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+.f-modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+.btn-modal {
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  font-size: 0.9rem;
+  transition: 0.2s;
+}
+.btn-cancel {
+  background: var(--bg-body);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+.btn-cancel:hover {
+  background: var(--border);
+}
+.btn-confirm {
+  background: var(--primary);
+  color: white;
+}
+.btn-confirm:hover {
+  filter: brightness(1.1);
+}
+.btn-confirm.danger {
+  background: #ef4444;
+}
 
 /* --- TOAST (THÔNG BÁO) --- */
-.f-toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
-.f-toast { min-width: 300px; padding: 16px; background: var(--bg-card); color: var(--text-main); border-left: 5px solid var(--primary); border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); display: flex; align-items: center; justify-content: space-between; animation: slideIn 0.3s ease; border: 1px solid var(--border); }
-.f-toast.success { border-left-color: #22c55e; }
-.f-toast.error { border-left-color: #ef4444; }
-@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+.f-toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.f-toast {
+  min-width: 300px;
+  padding: 16px;
+  background: var(--bg-card);
+  color: var(--text-main);
+  border-left: 5px solid var(--primary);
+  border-radius: 4px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  animation: slideIn 0.3s ease;
+  border: 1px solid var(--border);
+}
+.f-toast.success {
+  border-left-color: #22c55e;
+}
+.f-toast.error {
+  border-left-color: #ef4444;
+}
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 1024px) {
+    .studio-grid{
+        display: flex;
+        flex-direction: column;
+    }
+    .studio-sidebar{
+        position: unset;
+    }
+}

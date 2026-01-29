@@ -7,7 +7,10 @@ $user_id = $_SESSION['user_id'];
 $stmt = $pdo->prepare("SELECT * FROM stories WHERE id = ? AND user_id = ?");
 $stmt->execute([$story_id, $user_id]);
 $story = $stmt->fetch();
-if (!$story) { header("Location: /fstory/creator"); exit(); }
+if (!$story) {
+    header("Location: /fstory/creator");
+    exit();
+}
 
 // Lấy danh sách chương (Sắp xếp tăng dần để đọc đúng thứ tự)
 $chapStmt = $pdo->prepare("SELECT * FROM chapters WHERE story_id = ? ORDER BY chapter_number ASC");
@@ -16,14 +19,32 @@ $chapters = $chapStmt->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="vi" data-theme="light">
+
 <head>
-    <title>Quản lý: <?php echo htmlspecialchars($story['title']); ?></title>
+    <title>FStudio | Admin_<?php echo htmlspecialchars($story['title']); ?></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="/fstory/assets/css/style.css">
     <link rel="stylesheet" href="/fstory/assets/css/studio.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
+    <link rel="shortcut icon" href="../../assets/img/fstory_logo.png" type="image/x-icon">
 </head>
+
 <body>
-    <?php include "../../view/header.php"; ?>
+    <header>
+        <div class="container header-content">
+            <div style="display: flex; align-items: center; gap: 40px;">
+                <a href="/fstory/creator" class="logo">FStudio</a>
+            </div>
+
+
+            <div class="nav-actions">
+                <button class="icon-btn" id="themeToggle"><i class="fa-solid fa-moon"></i></button>
+                <a href="/fstory/creator" class="btn-write" style="background: var(--primary); color: white;">Trở về</a>
+            </div>
+        </div>
+    </header>
     <main class="container">
         <div class="studio-grid">
             <aside class="studio-sidebar">
@@ -36,22 +57,22 @@ $chapters = $chapStmt->fetchAll();
                         <?php echo count($chapters); ?> Chương • <?php echo ucfirst($story['status']); ?>
                     </p>
                     <a href="edit_chapter.php?story_id=<?php echo $story['id']; ?>" class="btn-write" style="width: 100%; background: var(--primary); color: white; display: block; margin-bottom: 10px;">
-                        <i class="fa-solid fa-plus"></i> Viết Chương Mới
+                        Tạo chương mới
                     </a>
                     <button onclick="deleteStory(<?php echo $story['id']; ?>)" class="btn-write" style="width: 100%; color: #ef4444; border-color: #ef4444;">
-                        <i class="fa-solid fa-trash"></i> Xóa Truyện
+                        Xoá tác phẩm
                     </button>
                 </div>
             </aside>
 
             <section>
                 <div class="studio-tabs">
-                    <div class="tab-btn active" onclick="openTab('chapters')">Danh sách chương</div>
-                    <div class="tab-btn" onclick="openTab('settings')">Thiết lập truyện</div>
+                    <div class="tab-btn active" onclick="openTab('chapters')">Danh sách</div>
+                    <div class="tab-btn" onclick="openTab('settings')">Thiết lập </div>
                 </div>
 
                 <div id="tab-chapters">
-                    <?php if(empty($chapters)): ?>
+                    <?php if (empty($chapters)): ?>
                         <div class="sidebar-card shadow" style="text-align: center; padding: 40px; color: var(--text-muted);">
                             Chưa có chương nào. Hãy bắt đầu viết ngay!
                         </div>
@@ -60,13 +81,13 @@ $chapters = $chapStmt->fetchAll();
                             <i class="fa-solid fa-arrows-up-down"></i> Kéo thả để sắp xếp lại thứ tự chương.
                         </div>
                         <div id="chapterList">
-                            <?php foreach($chapters as $c): ?>
+                            <?php foreach ($chapters as $c): ?>
                                 <div class="chapter-item shadow" data-id="<?php echo $c['id']; ?>">
                                     <div style="display: flex; align-items: center; gap: 15px;">
                                         <i class="fa-solid fa-grip-vertical" style="color: var(--text-muted);"></i>
                                         <div>
                                             <h4 style="font-size: 1rem;">
-                                                <span class="chap-num">Chương <?php echo $c['chapter_number']; ?></span>: 
+                                                <span class="chap-num">Chương <?php echo $c['chapter_number']; ?></span>:
                                                 <?php echo htmlspecialchars($c['title']); ?>
                                             </h4>
                                             <small style="color: var(--text-muted);"><?php echo date('H:i d/m/Y', strtotime($c['created_at'])); ?></small>
@@ -85,7 +106,7 @@ $chapters = $chapStmt->fetchAll();
                 <div id="tab-settings" style="display: none;">
                     <form id="updateStoryForm" class="sidebar-card shadow" onsubmit="updateStory(event)">
                         <input type="hidden" name="id" value="<?php echo $story['id']; ?>">
-                        
+
                         <div style="margin-bottom: 20px;">
                             <label style="font-weight: 700; font-size: 0.9rem;">Tên tác phẩm</label>
                             <input type="text" name="title" value="<?php echo htmlspecialchars($story['title']); ?>" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; margin-top: 8px;">
@@ -112,6 +133,7 @@ $chapters = $chapStmt->fetchAll();
     </main>
 
     <script src="/fstory/assets/js/studio_ui.js"></script>
+    <script src="/fstory/assets/js/system_display.js"></script>
     <script>
         function openTab(name) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -130,22 +152,31 @@ $chapters = $chapStmt->fetchAll();
 
         // Kéo thả sắp xếp
         const el = document.getElementById('chapterList');
-        if(el) {
+        if (el) {
             new Sortable(el, {
-                animation: 150, ghostClass: 'sortable-ghost',
+                animation: 150,
+                ghostClass: 'sortable-ghost',
                 onEnd: async () => {
                     const ids = Array.from(document.querySelectorAll('.chapter-item')).map(i => i.getAttribute('data-id'));
                     document.querySelectorAll('.chapter-item').forEach((item, idx) => {
                         item.querySelector('.chap-num').innerText = "Chương " + (idx + 1);
                     });
                     try {
-                        const res = await fetch('api_reorder_chapters.php', {
-                            method: 'POST', headers: {'Content-Type': 'application/json'},
-                            body: JSON.stringify({ story_id: <?php echo $story_id; ?>, order: ids })
+                        const res = await fetch('api_reorder_chapters', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                story_id: <?php echo $story_id; ?>,
+                                order: ids
+                            })
                         });
                         const d = await res.json();
                         d.success ? showToast('Đã cập nhật thứ tự!') : showToast(d.message, 'error');
-                    } catch(e) { showToast('Lỗi kết nối!', 'error'); }
+                    } catch (e) {
+                        showToast('Lỗi kết nối!', 'error');
+                    }
                 }
             });
         }
@@ -154,28 +185,49 @@ $chapters = $chapStmt->fetchAll();
             e.preventDefault();
             const fd = new FormData(e.target);
             try {
-                const res = await fetch('api_update_story.php', { method:'POST', body:fd });
+                const res = await fetch('api_update_story', {
+                    method: 'POST',
+                    body: fd
+                });
                 const d = await res.json();
-                if(d.success) { showToast('Cập nhật thành công!'); setTimeout(() => location.reload(), 1000); }
-                else showToast(d.message, 'error');
-            } catch(e) { showToast('Lỗi server', 'error'); }
+                if (d.success) {
+                    showToast('Cập nhật thành công!');
+                    setTimeout(() => location.reload(), 1000);
+                } else showToast(d.message, 'error');
+            } catch (e) {
+                showToast('Lỗi server', 'error');
+            }
         }
 
         function reqDelChapter(id) {
             confirmModal('Xóa chương?', 'Bạn chắc chắn muốn xóa chương này?', async () => {
-                const res = await fetch('api_delete_chapter.php', { method:'POST', body: new URLSearchParams({'id':id}) });
+                const res = await fetch('api_delete_chapter', {
+                    method: 'POST',
+                    body: new URLSearchParams({
+                        'id': id
+                    })
+                });
                 const d = await res.json();
-                if(d.success) { showToast('Đã xóa chương!'); setTimeout(() => location.reload(), 1000); }
+                if (d.success) {
+                    showToast('Đã xóa chương!');
+                    setTimeout(() => location.reload(), 1000);
+                }
             }, true);
         }
 
         function deleteStory(id) {
-            confirmModal('Xóa Truyện?', 'Tất cả chương và ảnh bìa sẽ bị xóa vĩnh viễn!', async () => {
-                const res = await fetch('api_delete_story.php', { method:'POST', body: new URLSearchParams({'id':id}) });
+            confirmModal('Xóa tác phẩm', 'Tất cả chương và ảnh bìa sẽ bị xóa vĩnh viễn!', async () => {
+                const res = await fetch('api_delete_story', {
+                    method: 'POST',
+                    body: new URLSearchParams({
+                        'id': id
+                    })
+                });
                 const d = await res.json();
-                if(d.success) window.location.href = '/fstory/creator';
+                if (d.success) window.location.href = '/fstory/creator';
             }, true);
         }
     </script>
 </body>
+
 </html>

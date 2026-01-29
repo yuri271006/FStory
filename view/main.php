@@ -1,23 +1,23 @@
 <?php
+// File này được include từ index.php nên đường dẫn assets/db.php là đúng
 require_once "assets/db.php";
 
-// 1. Lấy dữ liệu cho Hero Bento (3 truyện mới nhất hoặc có tag Trending)
+// 1. Lấy dữ liệu cho Hero Bento (3 truyện mới nhất)
 $heroStmt = $pdo->query("SELECT * FROM stories ORDER BY created_at DESC LIMIT 3");
 $heroStories = $heroStmt->fetchAll();
 
 // 2. Lấy danh sách truyện mới cập nhật (8 truyện)
-// Join với chapters để lấy số chương mới nhất
 $newStoriesStmt = $pdo->query("
     SELECT s.*, COUNT(c.id) as total_chapters 
     FROM stories s 
     LEFT JOIN chapters c ON s.id = c.story_id 
     GROUP BY s.id 
-    ORDER BY s.created_at DESC 
+    ORDER BY s.updated_at DESC, s.created_at DESC 
     LIMIT 8
 ");
 $newStories = $newStoriesStmt->fetchAll();
 
-// 3. Lấy Top lượt đọc (Top 5 truyện có nhiều chương nhất - giả định là độ hot)
+// 3. Lấy Top lượt đọc (Top 5 truyện có nhiều chương nhất)
 $topStoriesStmt = $pdo->query("
     SELECT s.title, s.slug, COUNT(c.id) as total_chapters 
     FROM stories s 
@@ -30,13 +30,14 @@ $topStories = $topStoriesStmt->fetchAll();
 ?>
 
 <main class="container">
+    
     <div class="hero-bento">
         <?php if (!empty($heroStories)): ?>
             <div class="bento-item bento-1 shadow">
-                <img src="/fstory/src/<?php echo $heroStories[0]['cover_image']; ?>" alt="Cover">
+                <img src="src/<?php echo $heroStories[0]['cover_image']; ?>" alt="Cover">
                 <div class="content">
                     <span class="tag-trending">TRENDING</span>
-                    <a href="detail/<?php echo $heroStories[0]['slug']; ?>" style="text-decoration: none; color: white;">
+                    <a href="detail.php?slug=<?php echo $heroStories[0]['slug']; ?>" style="text-decoration: none; color: white;">
                         <h2 style="font-family: 'Merriweather', serif; font-size: 2rem; margin-top: 10px;">
                             <?php echo htmlspecialchars($heroStories[0]['title']); ?>
                         </h2>
@@ -47,8 +48,8 @@ $topStories = $topStoriesStmt->fetchAll();
 
             <?php for($i=1; $i<count($heroStories); $i++): ?>
             <div class="bento-item shadow">
-                <a href="detail/<?php echo $heroStories[$i]['slug']; ?>">
-                    <img src="/fstory/src/<?php echo $heroStories[$i]['cover_image']; ?>" alt="Cover">
+                <a href="detail.php?slug=<?php echo $heroStories[$i]['slug']; ?>">
+                    <img src="src/<?php echo $heroStories[$i]['cover_image']; ?>" alt="Cover">
                 </a>
             </div>
             <?php endfor; ?>
@@ -58,22 +59,25 @@ $topStories = $topStoriesStmt->fetchAll();
     <div class="grid-layout">
         <section>
             <div class="section-header">
-                <h2 class="section-title">Truyện mới cập nhật</h2>
-                <a href="all-stories" class="view-all">Xem tất cả <i class="fa-solid fa-angles-right"></i></a>
+                <h2 class="section-title">Mới cập nhật</h2>
+                <a href="all-stories.php" class="view-all">Xem tất cả <i class="fa-solid fa-angles-right"></i></a>
             </div>
             
             <div class="story-grid">
                 <?php foreach($newStories as $story): ?>
                 <div class="story-card shadow">
                     <div class="card-cover">
-                        <img src="/fstory/src/<?php echo $story['cover_image']; ?>" alt="Cover">
+                        <img src="src/<?php echo $story['cover_image']; ?>" alt="Cover">
                         <div class="chapter-badge">C.<?php echo $story['total_chapters']; ?></div>
                     </div>
                     <div class="card-info">
-                        <a href="detail/<?php echo $story['slug']; ?>">
+                        <a href="detail.php?slug=<?php echo $story['slug']; ?>">
                             <h4><?php echo htmlspecialchars($story['title']); ?></h4>
                         </a>
-                        <p>Sáng tác • <?php echo date('d/m', strtotime($story['created_at'])); ?></p>
+                        <p>
+                            <i class="fa-solid fa-pen-nib"></i> 
+                            <?php echo date('d/m', strtotime($story['created_at'])); ?>
+                        </p>
                     </div>
                 </div>
                 <?php endforeach; ?>
@@ -83,7 +87,7 @@ $topStories = $topStoriesStmt->fetchAll();
         <aside>
             <div class="sidebar-card shadow">
                 <h4 style="margin-bottom: 25px; display: flex; align-items: center; gap: 10px;">
-                    <i class="fa-solid fa-crown" style="color: #f59e0b;"></i> Top lượt đọc
+                    <i class="fa-solid fa-crown" style="color: #f59e0b;"></i> Tiêu Điểm 
                 </h4>
                 <div class="top-list">
                     <?php 
@@ -95,7 +99,9 @@ $topStories = $topStoriesStmt->fetchAll();
                             <?php echo str_pad($rank, 2, '0', STR_PAD_LEFT); ?>
                         </span>
                         <div class="top-info">
-                            <a href="detail/<?php echo $top['slug']; ?>"><h5><?php echo htmlspecialchars($top['title']); ?></h5></a>
+                            <a href="detail.php?slug=<?php echo $top['slug']; ?>">
+                                <h5><?php echo htmlspecialchars($top['title']); ?></h5>
+                            </a>
                             <small><?php echo $top['total_chapters']; ?> Chương</small>
                         </div>
                     </div>
@@ -107,9 +113,11 @@ $topStories = $topStoriesStmt->fetchAll();
             </div>
 
             <div class="sidebar-card shadow" style="background: var(--primary); color: white; margin-top: 20px;">
-                <h4>FStory Studio</h4>
-                <p style="font-size: 0.8rem; opacity: 0.9; margin-top: 10px;">Bạn có một câu chuyện muốn kể? Hãy tham gia cùng đội ngũ sáng tác của chúng tôi.</p>
-                <a href="creator" class="btn-write" style="background: white; color: var(--primary); margin-top: 15px; display: block; text-align: center;">Bắt đầu viết</a>
+                <h4>FStudio?</h4>
+                <p style="font-size: 0.8rem; opacity: 0.9; margin-top: 10px;">Bạn sở hữu một thế giới riêng chờ được kể? Hãy trở thành FMember để trải nghiệm FStudio — hệ sinh thái công cụ chuyên nghiệp tối ưu cho tác giả.</p>
+                <a href="creator" class="btn-write" style="background: white; color: var(--primary); margin-top: 15px; display: block; text-align: center; font-weight: 700;">
+                    Sáng tác ngay!
+                </a>
             </div>
         </aside>
     </div>
