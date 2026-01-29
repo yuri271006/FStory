@@ -329,8 +329,8 @@ try {
     // 6. Lưu vào Database
     $sql = "INSERT INTO users (nickname, user_handle, email, password, avatar, created_at) VALUES (?, ?, ?, ?, ?, NOW())";
     $stmt = $pdo->prepare($sql);
-
-    $defaultAvatar = 'https://i.pravatar.cc/100?img=' . rand(1, 70);
+    // $defaultAvatar = '' . rand(1, 70);
+    $defaultAvatar = '';
 
     if ($stmt->execute([$nickname, $user_handle, $email, $hashedPassword, $defaultAvatar])) {
 
@@ -344,7 +344,7 @@ try {
         $_SESSION['user_avatar'] = $defaultAvatar; // LƯU AVATAR MẶC ĐỊNH
         echo json_encode([
             'success' => true,
-            'message' => 'Đăng kí thành công! Đang đưa bạn đến trang cá nhân...',
+            'message' => 'Đăng kí thành công! Đang xử lí...',
             'handle' => $user_handle // Trả về handle để JavaScript điều hướng
         ]);
     } else {

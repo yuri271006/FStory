@@ -26,10 +26,14 @@ if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $profileUser['id']) {
 <html lang="vi" data-theme="light">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $profileUser['nickname']; ?> (@<?php echo $profileUser['user_handle']; ?>) | FStory</title>
-
+    <!--Meta-->
+    <?php
+        // Đặt tiêu đề riêng cho trang này
+        $page_title = "FMember | @" . $profileUser['user_handle'];
+        $page_desc = "Trang cá nhân của người dùng @" . $profileUser['user_handle'] . " tại FMember thuộc nền tảng đọc số FStory.";
+        // Sau đó mới include
+        include "../../view/meta_tag.php";
+    ?>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="/fstory/assets/css/style.css">
@@ -155,8 +159,17 @@ if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $profileUser['id']) {
 </head>
 
 <body>
-
-    <?php include "../../view/header.php"; ?>
+    <header>
+        <div class="container header-content">
+            <div style="display: flex; align-items: center; gap: 40px;">
+                <a href="javscript:void(0)" class="logo">FMember</a>
+            </div>
+            <div class="nav-actions">
+                <button class="icon-btn" id="themeToggle"><i class="fa-solid fa-moon"></i></button>
+                <a href="./" class="btn-write" style="background: var(--primary); color: white;">Trang chủ</a>
+            </div>
+        </div>
+    </header>
 
     <main class="container">
         <div class="profile-container">
@@ -234,8 +247,6 @@ if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $profileUser['id']) {
             </div>
         </div>
     </main>
-
-    <?php include "../../view/footer.php"; ?>
 
     <script src="/fstory/assets/js/system_display.js"></script>
 </body>

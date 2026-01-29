@@ -19,19 +19,25 @@ foreach ($myStories as $s) {
     $stat_total_chapters += $s['total_chapters'];
 }
 ?>
+<header>
+    <div class="container header-content">
+        <div style="display: flex; align-items: center; gap: 40px;">
+            <a href="javascript:void(0)" class="logo">FStudio</a>
+        </div>
 
+
+        <div class="nav-actions">
+            <button class="icon-btn" id="themeToggle"><i class="fa-solid fa-moon"></i></button>
+            <a href="./" class="btn-write" style="background: var(--primary); color: white;">Trang chủ</a>
+        </div>
+    </div>
+</header>
 <main class="container" style="margin-top: 30px;">
     <div class="section-header">
-        <h2 class="section-title">FStudio của tôi</h2>
-        <div>
-            <a href="page/creator/add" class="btn-write" style="background: var(--primary); color: white; margin: 0px 4px; border-radius: 50%; padding: 8px 13px 8px 13px;">
-                <i class="fa-solid fa-plus"></i>
-            </a>
-            <a class="btn-write" id="themeToggle" style="background: var(--primary); color: white; margin: 0px 4px; border-radius: 50%; padding: 8px 13px 8px 13px;"><i class="fa-solid fa-moon"></i></a>
-            <a href="/fstory/" class="btn-write" style="background: var(--primary); color: white; margin: 0px 0px; border-radius: 50%; padding: 8px 13px 8px 13px;">
-                <i class="fa-solid fa-home"></i>
-            </a>
-        </div>
+        <h2 class="section-title">Bản thảo của tôi</h2>
+        <a href="page/creator/add" class="btn-write" style="background: var(--primary); color: white;">
+            <i class="fa-solid fa-plus"></i> Tác phẩm mới
+        </a>
     </div>
 
     <div class="grid-layout">

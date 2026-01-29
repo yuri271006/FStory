@@ -1,5 +1,5 @@
-<?php 
-session_start(); 
+<?php
+session_start();
 
 // Nếu đã đăng nhập, lấy handle từ session để điều hướng về trang cá nhân
 if (isset($_SESSION['user_id']) && isset($_SESSION['user_handle'])) {
@@ -11,9 +11,14 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_handle'])) {
 <html lang="vi" data-theme="light">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gia nhập FStory</title>
+    <!--Meta-->
+    <?php
+        // Đặt tiêu đề riêng cho trang này
+        $page_title = "FMember | Tài khoản";
+        $page_desc = "Đăng kí hoặc đăng nhập với tư cách FMember để tận hướng tối đa các tiện ích số.";
+        // Sau đó mới include
+        include "../../view/meta_tag.php";
+    ?>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../../assets/css/style.css">
@@ -221,7 +226,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_handle'])) {
     <header>
         <div class="container header-content">
             <div style="display: flex; align-items: center; gap: 40px;">
-                <a href="./" class="logo">FStory</a>
+                <a href="javscript:void(0)" class="logo">FMember</a>
             </div>
             <div class="nav-actions">
                 <button class="icon-btn" id="themeToggle"><i class="fa-solid fa-moon"></i></button>
@@ -235,28 +240,35 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_handle'])) {
 
             <div class="benefits-side">
                 <h2>Bắt đầu hành trình <br> tại FStory ngay hôm nay!</h2>
-                <p style="color: var(--text-muted); font-size: 1.1rem;">Trở thành một phần của cộng đồng yêu truyện để trải nghiệm những tính năng đặc quyền.</p>
+                <p style="color: var(--text-muted); font-size: 1.1rem;">Trở thành một FMember và thưởng thức trọn vẹn cuộc sống chữ.</p>
 
                 <div class="benefit-list">
                     <div class="benefit-card">
-                        <div class="benefit-icon"><i class="fa-solid fa-bookmark"></i></div>
+                        <div class="benefit-icon"><i class="fa-solid fa-edit"></i></div>
                         <div class="benefit-info">
-                            <h4>Tủ truyện cá nhân</h4>
-                            <p>Lưu lại những bộ truyện yêu thích và đồng bộ trên mọi thiết bị.</p>
+                            <h4>FStudio</h4>
+                            <p>Sáng tác và xuất bản, nơi những huyền thoại ra đời.</p>
                         </div>
                     </div>
                     <div class="benefit-card">
-                        <div class="benefit-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                        <div class="benefit-icon"><i class="fa-solid fa-user"></i></div>
                         <div class="benefit-info">
-                            <h4>Lịch sử đọc thông minh</h4>
-                            <p>Tự động ghi nhớ chương bạn đang đọc dở để tiếp tục bất cứ lúc nào.</p>
+                            <h4>FMember</h4>
+                            <p>Một không gian của riêng bạn, riêng tư và bảo mật.</p>
                         </div>
                     </div>
                     <div class="benefit-card">
-                        <div class="benefit-icon"><i class="fa-solid fa-bell"></i></div>
+                        <div class="benefit-icon"><i class="fa-solid fa-donate"></i></div>
                         <div class="benefit-info">
-                            <h4>Thông báo chương mới</h4>
-                            <p>Nhận thông báo ngay lập tức khi tác giả bạn theo dõi ra chương mới.</p>
+                            <h4>FMoney</h4>
+                            <p>Tính minh bạch trong thu nhập, nhuận bút và quảng cáo.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon"><i class="fa-solid fa-play"></i></div>
+                        <div class="benefit-info">
+                            <h4>FStory</h4>
+                            <p>Trọn vẹn những tiện ích công nghệ bạn có thể dùng.</p>
                         </div>
                     </div>
                 </div>
@@ -272,40 +284,40 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_handle'])) {
 
                 <form id="loginForm" onsubmit="handleAuth(event, 'login')">
                     <div class="form-group">
-                        <label>Tài khoản</label>
-                        <input type="text" name="username" required placeholder="Email hoặc tên đăng nhập">
+                        <label>Email</label>
+                        <input type="text" name="username" required placeholder="fstory@email.com">
                     </div>
                     <div class="form-group">
                         <label>Mật khẩu</label>
                         <input type="password" name="password" required placeholder="••••••••">
                     </div>
                     <button type="submit" class="btn-submit">
-                        Vào thế giới truyện
+                        Đăng nhập
                     </button>
                 </form>
 
                 <form id="registerForm" class="hidden" onsubmit="handleAuth(event, 'register')">
                     <div class="form-group">
-                        <label>Tên hiển thị</label>
-                        <input type="text" name="nickname" required placeholder="Ví dụ: Chu Minh Thụy">
+                        <label>Biệt danh</label>
+                        <input type="text" name="nickname" required placeholder="FStory">
                     </div>
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" name="email" required placeholder="email@fstory.vn">
+                        <input type="email" name="email" required placeholder="fstory@email.com">
                     </div>
                     <div class="form-group">
                         <label>Mật khẩu</label>
-                        <input type="password" name="password" required placeholder="Tối thiểu 6 ký tự">
+                        <input type="password" name="password" required placeholder="••••••••">
                     </div>
                     <button type="submit" class="btn-submit">
-                        Tạo tài khoản mới
+                        Đăng ký
                     </button>
                 </form>
             </div>
         </div>
     </main>
 
-    <?php include "../../view/footer.php";?>
+    <?php include "../../view/footer.php"; ?>
     <script src="../../assets/js/system_display.js"></script>
     <script>
         function toggleAuth(type) {
