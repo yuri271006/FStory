@@ -36,7 +36,7 @@ $topStories = $topStoriesStmt->fetchAll();
             <div class="bento-item bento-1 shadow">
                 <img src="src/<?php echo $heroStories[0]['cover_image']; ?>" alt="Cover">
                 <div class="content">
-                    <span class="tag-trending">TRENDING</span>
+                    <span class="tag-trending">NỔI BẬT</span>
                     <a href="detail.php?slug=<?php echo $heroStories[0]['slug']; ?>" style="text-decoration: none; color: white;">
                         <h2 style="font-family: 'Merriweather', serif; font-size: 2rem; margin-top: 10px;">
                             <?php echo htmlspecialchars($heroStories[0]['title']); ?>
@@ -59,7 +59,7 @@ $topStories = $topStoriesStmt->fetchAll();
     <div class="grid-layout">
         <section>
             <div class="section-header">
-                <h2 class="section-title">Mới cập nhật</h2>
+                <h2 class="section-title">Gần đây</h2>
                 <a href="all-stories.php" class="view-all">Xem tất cả <i class="fa-solid fa-angles-right"></i></a>
             </div>
             
@@ -68,14 +68,14 @@ $topStories = $topStoriesStmt->fetchAll();
                 <div class="story-card shadow">
                     <div class="card-cover">
                         <img src="src/<?php echo $story['cover_image']; ?>" alt="Cover">
-                        <div class="chapter-badge">C.<?php echo $story['total_chapters']; ?></div>
+                        <div class="chapter-badge">Chương <?php echo $story['total_chapters']; ?></div>
                     </div>
                     <div class="card-info">
                         <a href="detail.php?slug=<?php echo $story['slug']; ?>">
                             <h4><?php echo htmlspecialchars($story['title']); ?></h4>
                         </a>
                         <p>
-                            <i class="fa-solid fa-pen-nib"></i> 
+                            Xuất bản 
                             <?php echo date('d/m', strtotime($story['created_at'])); ?>
                         </p>
                     </div>
@@ -87,7 +87,7 @@ $topStories = $topStoriesStmt->fetchAll();
         <aside>
             <div class="sidebar-card shadow">
                 <h4 style="margin-bottom: 25px; display: flex; align-items: center; gap: 10px;">
-                    <i class="fa-solid fa-crown" style="color: #f59e0b;"></i> Tiêu Điểm 
+                    <i class="fa-solid fa-crown" style="color: #f59e0b;"></i> Năng động nhất
                 </h4>
                 <div class="top-list">
                     <?php 

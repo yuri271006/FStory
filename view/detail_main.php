@@ -78,17 +78,17 @@ $otherStories = $authStmt->fetchAll();
                     
                     <div style="margin-bottom: 20px; font-size: 0.9rem; color: var(--text-muted);">
                         <p style="margin-bottom: 8px;">
-                            <i class="fa-solid fa-user-pen" style="width:20px; color:var(--primary);"></i> 
+                            <i class="fa-solid fa-user-pen" style="width:20px; color:var(--primary);"></i>  Tác giả: 
                             <a href="me/@<?php echo $story['user_handle']; ?>" style="font-weight:700; color:var(--text-main);">
                                 <?php echo htmlspecialchars($story['nickname']); ?>
                             </a>
                         </p>
                         <p style="margin-bottom: 8px;">
-                            <i class="fa-solid fa-layer-group" style="width:20px; color:var(--primary);"></i> 
-                            <?php echo count($chapters); ?> Chương
+                            <i class="fa-solid fa-layer-group" style="width:20px; color:var(--primary);"></i> Độ dài: 
+                            <?php echo count($chapters); ?>  chương
                         </p>
                         <p>
-                            <i class="fa-solid fa-rotate" style="width:20px; color:var(--primary);"></i> 
+                            <i class="fa-solid fa-rotate" style="width:20px; color:var(--primary);"></i> Trạng thái: 
                             <span style="color: <?php echo $story['status']=='ongoing'?'#16a34a':'#2563eb'; ?>; font-weight:700;">
                                 <?php echo $story['status']=='ongoing' ? 'Đang tiến hành' : 'Đã hoàn thành'; ?>
                             </span>
@@ -122,7 +122,7 @@ $otherStories = $authStmt->fetchAll();
             <div class="sidebar-card shadow" style="padding: 0;">
                 <div class="chapter-list-box">
                     <?php if(empty($chapters)): ?>
-                        <div style="padding:30px; text-align:center; color:var(--text-muted);">Chưa có chương nào được đăng tải.</div>
+                        <div style="padding:30px; text-align:center; color:var(--text-muted);">Tác giả chưa đăng tải chương nào cả.</div>
                     <?php else: foreach($chapters as $chap): ?>
                         <a href="reading.php?id=<?php echo $chap['id']; ?>" class="chapter-item">
                             <span>Chương <?php echo $chap['chapter_number']; ?>: <?php echo htmlspecialchars($chap['title']); ?></span>
@@ -145,7 +145,7 @@ $otherStories = $authStmt->fetchAll();
             <div class="sidebar-card shadow" style="margin-top: 20px;">
                 <h4 style="margin-bottom: 15px; font-size: 1rem;">Cùng tác giả</h4>
                 <?php if(empty($otherStories)): ?>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">Không có truyện nào khác.</p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Không có tác phẩm nào khác.</p>
                 <?php else: foreach($otherStories as $os): ?>
                     <div style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
                         <img src="src/<?php echo $os['cover_image']; ?>" style="width: 45px; height: 60px; border-radius: 4px; object-fit: cover;">
