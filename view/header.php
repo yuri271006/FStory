@@ -17,19 +17,18 @@
         </div>
 
         <div class="nav-actions">
-            <button class="icon-btn" id="themeToggle"><i class="fa-solid fa-moon"></i></button>
-
             <?php if (isset($_SESSION['user_id'])): ?>
                 <a href="creator" class="btn-write">
                     <i class="fa-solid fa-edit"></i> FStudio
                 </a>
-
-                <a href="/fstory/@<?php echo $_SESSION['user_handle']; ?>"
+                <button class="icon-btn" id="themeToggle"><i class="fa-solid fa-moon"></i></button>
+                <a href="@<?php echo $_SESSION['user_handle']; ?>"
                     class="icon-btn"
                     style="border: 2px solid var(--primary); cursor: pointer; overflow: hidden; display: flex;">
-                    <img src="<?php echo $_SESSION['user_avatar'] ?? 'https://i.pravatar.cc/100?img=12'; ?>" alt="Profile">
+                    <img src="src/avt/<?php echo $_SESSION['user_avatar'] ?? 'default_avt.png'; ?>" alt="Profile">
                 </a>
             <?php else: ?>
+                <button class="icon-btn" id="themeToggle"><i class="fa-solid fa-moon"></i></button>
                 <a href="page/user/account" class="btn-write" style="background: var(--primary); color: white;">FMember</a>
             <?php endif; ?>
         </div>

@@ -3,7 +3,7 @@
 $chapter_id = $_GET['id'] ?? 0;
 
 if (!$chapter_id) {
-    echo "<script>window.location.href = 'index.php';</script>";
+    echo "<script>window.location.href = './';</script>";
     exit();
 }
 
@@ -13,7 +13,7 @@ $stmt->execute([$chapter_id]);
 $chapter = $stmt->fetch();
 
 if (!$chapter) {
-    die("<div class='container' style='padding:50px; text-align:center;'><h3>Chương này không tồn tại!</h3><a href='index.php'>Về trang chủ</a></div>");
+    die("<div class='container' style='padding:50px; text-align:center;'><h2>:((( <br> Bạn ơi, dữ liệu về chương này đã bị lạc mất!</h2>");
 }
 
 // 3. LẤY THÔNG TIN TRUYỆN (Để làm Breadcrumb)
@@ -87,7 +87,7 @@ $wordCount = str_word_count(strip_tags($chapter['content']));
 <main class="reading-container">
     
     <nav style="margin-bottom: 30px; font-size: 0.9rem; color: var(--text-muted);">
-        <a href="index.php" style="color: var(--text-muted); text-decoration: none;">Trang chủ</a> 
+        <a href="javascript:void(0)" style="color: var(--text-muted); text-decoration: none;">Tác phẩm</a> 
         <span style="margin: 0 8px;">/</span> 
         <a href="detail.php?slug=<?php echo $story['slug']; ?>" style="color: var(--text-muted); text-decoration: none; font-weight: 600;">
             <?php echo htmlspecialchars($story['title']); ?>
@@ -120,7 +120,7 @@ $wordCount = str_word_count(strip_tags($chapter['content']));
                 <i class="fa-solid fa-chevron-left"></i> Chương trước
             </a>
         <?php else: ?>
-            <a href="#" class="nav-btn disabled"><i class="fa-solid fa-chevron-left"></i> Chương trước</a>
+            <a href="#" class="nav-btn disabled"><i class="fa-solid fa-chevron-left"></i>HẾT CHƯƠNG</a>
         <?php endif; ?>
 
         <a href="detail.php?slug=<?php echo $story['slug']; ?>" class="nav-btn" style="border-color: var(--text-muted);">
@@ -132,7 +132,7 @@ $wordCount = str_word_count(strip_tags($chapter['content']));
                 Chương sau <i class="fa-solid fa-chevron-right"></i>
             </a>
         <?php else: ?>
-            <a href="#" class="nav-btn disabled">Hết chương <i class="fa-solid fa-ban"></i></a>
+            <a href="#" class="nav-btn disabled">HẾT CHƯƠNG <i class="fa-solid fa-ban"></i></a>
         <?php endif; ?>
     </nav>
 

@@ -24,7 +24,7 @@
 /* Kiểu chữ nội dung - Đây là linh hồn của web truyện */
 .chapter-content {
     font-family: 'Lora', serif; /* Font có chân giúp nhận diện mặt chữ nhanh hơn */
-    font-size: 20px;
+    font-size: 25px;
     line-height: 1.85; /* Khoảng cách dòng thoáng đạt giúp mắt dễ nắm bắt */
     color: var(--text-main);
     text-align: justify; /* Căn đều hai bên giúp bố cục gọn gàng */
@@ -73,7 +73,7 @@
     }
 
     .chapter-content {
-        font-size: 18px !important;
+        font-size: 19px !important;
         line-height: 1.75;
     }
 }

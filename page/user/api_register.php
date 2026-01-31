@@ -330,7 +330,7 @@ try {
     $sql = "INSERT INTO users (nickname, user_handle, email, password, avatar, created_at) VALUES (?, ?, ?, ?, ?, NOW())";
     $stmt = $pdo->prepare($sql);
     // $defaultAvatar = '' . rand(1, 70);
-    $defaultAvatar = '';
+    $defaultAvatar = 'default_avt.png';
 
     if ($stmt->execute([$nickname, $user_handle, $email, $hashedPassword, $defaultAvatar])) {
 

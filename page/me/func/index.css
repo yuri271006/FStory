@@ -1,0 +1,146 @@
+/* Tinh chỉnh một chút cho hợp tông màu của bạn */
+.swal2-confirm {
+  background-color: var(--primary) !important;
+}
+
+.swal2-cancel {
+  background-color: #6c757d !important;
+}
+.profile-container {
+  max-width: 1000px;
+  margin: 20px auto;
+  padding-bottom: 50px;
+}
+
+/* Banner & Avatar Section */
+.profile-cover {
+  height: 200px;
+  /* background: linear-gradient(135deg, var(--primary), #a855f7); */
+  background: url("../../../assets/img/banner_fmember.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  position: relative;
+}
+
+.profile-header-main {
+  background: var(--bg-card);
+  padding: 0 30px 30px;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  border: 1px solid var(--border);
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.avatar-holder {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  border: 5px solid var(--bg-card);
+  margin: -65px auto 15px;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-body);
+}
+
+.profile-name {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.profile-handle {
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* Stats */
+.profile-stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin: 20px 0;
+  padding: 15px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.stat-value {
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: var(--primary);
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Tabs & Content */
+.content-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tab-link {
+  padding: 10px 20px;
+  border-radius: 50px;
+  background: var(--bg-card);
+  color: var(--text-muted);
+  font-weight: 700;
+  border: 1px solid var(--border);
+  cursor: pointer;
+}
+
+.tab-link.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+@media (min-width: 768px) {
+  .profile-header-main {
+    text-align: left;
+  }
+
+  .avatar-holder {
+    margin: -65px 0 15px 0;
+  }
+
+  .header-actions {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+  }
+
+  .profile-stats {
+    justify-content: flex-start;
+  }
+}
+
+.tab-content {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

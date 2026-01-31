@@ -1,0 +1,244 @@
+/* --- 1. MODAL DANH SÁCH LIKE --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-box {
+  background: var(--bg-card);
+  width: 400px;
+  max-width: 90%;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.liker-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.liker-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+}
+
+/* --- 2. BÌNH LUẬN & TRẢ LỜI --- */
+/* Bình luận cha */
+.comment-item {
+  margin-bottom: 15px;
+}
+
+.comment-content {
+  background: var(--bg-body);
+  padding: 8px 12px;
+  border-radius: 15px;
+  display: inline-block;
+}
+
+/* Nút Trả lời nhỏ xíu dưới bình luận */
+.comment-actions {
+  font-size: 0.75rem;
+  margin-left: 10px;
+  margin-top: 2px;
+  color: var(--text-muted);
+}
+
+.btn-reply {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-reply:hover {
+  text-decoration: underline;
+}
+
+/* Bình luận con (Trả lời) - Thụt đầu dòng */
+.reply-list {
+  margin-left: 45px;
+  margin-top: 5px;
+  border-left: 2px solid var(--border);
+  padding-left: 10px;
+}
+
+.reply-item {
+  margin-bottom: 8px;
+}
+
+/* Ẩn bớt bình luận */
+.hidden-comment {
+  display: none;
+}
+
+.view-more-cmt {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  margin-top: 10px;
+  display: block;
+}
+
+.view-more-cmt:hover {
+  text-decoration: underline;
+}
+
+/* Khung nhập trả lời (Mặc định ẩn) */
+.reply-input-box {
+  display: none;
+  margin-top: 5px;
+  margin-left: 45px;
+}
+
+/* Textarea tự giãn nở */
+.auto-expand {
+  width: 100%;
+  min-height: 40px;
+  /* Chiều cao tối thiểu */
+  max-height: 300px;
+  /* Chiều cao tối đa trước khi scroll (nếu muốn giới hạn) */
+  overflow-y: hidden;
+  /* Ẩn thanh cuộn */
+  resize: none;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Menu Dropdown cho Sửa/Xóa */
+.post-options {
+  position: relative;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 25px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 120px;
+  display: none;
+  /* Mặc định ẩn */
+  z-index: 10;
+  overflow: hidden;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-item {
+  padding: 10px;
+  font-size: 0.9rem;
+  color: var(--text-main);
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background: var(--bg-body);
+}
+
+.dropdown-item.text-danger {
+  color: #ef4444;
+}
+
+/* Action Bar (Like/Comment) */
+.act-actions {
+  display: flex;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin-top: 10px;
+  padding: 5px 0;
+}
+
+.act-btn {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--text-muted);
+  border-radius: 5px;
+  transition: 0.2s;
+}
+
+.act-btn:hover {
+  background: var(--bg-body);
+}
+
+.act-btn.liked {
+  color: var(--primary);
+}
+
+/* Màu khi đã like */
+
+/* Comment Section */
+.comment-section {
+  display: none;
+  /* Mặc định ẩn */
+  margin-top: 10px;
+  padding-top: 10px;
+}
+
+.comment-input-box {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.comment-input {
+  flex: 1;
+  background: var(--bg-body);
+  border-radius: 15px;
+  padding: 8px 12px;
+  border: 1px solid transparent;
+}
+
+.cmt-options {
+  opacity: 0;
+  /* Chỉ hiện khi hover vào bình luận */
+  transition: opacity 0.2s;
+  margin-left: 5px;
+}
+
+.comment-bubble:hover .cmt-options {
+  opacity: 1;
+}
+
+.comment-bubble {
+  position: relative;
+  /* Căn chỉnh để nút 3 chấm nằm ngang với nội dung */
+}
