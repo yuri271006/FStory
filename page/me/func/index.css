@@ -127,8 +127,26 @@
   .profile-stats {
     justify-content: flex-start;
   }
-}
 
+}
+@media (max-width: 768px){
+  .grid-layout{
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .grid-layout aside{
+    margin-top: 10px;
+    margin-bottom: 0;
+  }
+  #profile-content{
+    margin-top: -20px;
+  }
+  .content-tabs{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
 .tab-content {
   animation: fadeIn 0.3s ease;
 }

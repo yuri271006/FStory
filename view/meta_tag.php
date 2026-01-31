@@ -24,11 +24,11 @@ if (isset($story) && !empty($story['title'])) {
 
 // 3. XỬ LÝ NẾU ĐANG Ở TRANG ĐỌC (reading.php)
 // (Logic này giữ nguyên, ưu tiên cao nhất)
-if (isset($chapter) && isset($story)) {
-    $meta_title = "Chương " . $chapter['chapter_number'] . ": " . htmlspecialchars($chapter['title']) . " - " . htmlspecialchars($story['title']);
-    $meta_desc = "Đọc chương " . $chapter['chapter_number'] . " của truyện " . htmlspecialchars($story['title']) . " tại FStory.";
+if (isset($chapter_rmeta) && isset($story_rmeta)) {
+    $meta_title = "Chương " . $chapter_rmeta['chapter_number'] . ": " . htmlspecialchars($chapter_rmeta['title']) . " - " . htmlspecialchars($story_rmeta['title']);
+    $meta_desc = "Đọc chương " . $chapter_rmeta['chapter_number'] . " của truyện " . htmlspecialchars($story_rmeta['title']) . " tại FStory.";
     // Vẫn dùng ảnh bìa truyện
-    $meta_image = "http://" . $_SERVER['HTTP_HOST'] . "/fstory/src/" . (isset($story['cover_image']) ? $story['cover_image'] : 'default-cover.jpg');
+    $meta_image = "http://" . $_SERVER['HTTP_HOST'] . "/fstory/src/" . (isset($story_rmeta['cover_image']) ? $story_rmeta['cover_image'] : 'default-cover.jpg');
     $meta_type = "article";
 }
 ?>

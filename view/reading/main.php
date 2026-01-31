@@ -120,7 +120,7 @@ $wordCount = str_word_count(strip_tags($chapter['content']));
                 <i class="fa-solid fa-chevron-left"></i> Chương trước
             </a>
         <?php else: ?>
-            <a href="#" class="nav-btn disabled"><i class="fa-solid fa-chevron-left"></i>HẾT CHƯƠNG</a>
+            <a href="#" class="nav-btn disabled"><i class="fa-solid fa-ban"></i>HẾT CHƯƠNG</a>
         <?php endif; ?>
 
         <a href="detail.php?slug=<?php echo $story['slug']; ?>" class="nav-btn" style="border-color: var(--text-muted);">

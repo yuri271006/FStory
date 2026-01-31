@@ -33,7 +33,7 @@
         $stmtAct->execute([$profileUser['id']]);
         $activities = $stmtAct->fetchAll();
 
-        if (count($activities) == 0) echo '<div class="sidebar-card"><p style="text-align:center; color:var(--text-muted);">Bạn chưa có hoạt động nào cả.</p></div>';
+        if (count($activities) == 0) echo '<div class="sidebar-card"><p style="text-align:center; color:var(--text-muted);">Chưa có hoạt động nào ở đây.</p></div>';
 
         foreach ($activities as $act):
             $actId = $act['id'];

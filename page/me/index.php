@@ -99,9 +99,9 @@ if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $profileUser['id']) {
             </div>
 
             <div class="content-tabs">
+                <div class="tab-link" data-target="bookshelf">Giới thiệu</div>
                 <div class="tab-link active" data-target="activities">Bài đăng</div>
                 <div class="tab-link" data-target="favorites">Yêu thích</div>
-                <div class="tab-link" data-target="bookshelf">Tủ truyện</div>
             </div>
 
             <div class="grid-layout">
